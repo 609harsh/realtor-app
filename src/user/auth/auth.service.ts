@@ -77,7 +77,7 @@ export class AuthService {
         name,
         id,
       },
-      process.env.JSON_TOKEN_KEY,
+      process.env.JWT_TOKEN,
       {
         expiresIn: 3600000,
       },
@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   generateProductKey(email: string, userType: UserType) {
-    const string = `${email}-${userType}-${process.env.PRODUCT_KEY_SECRET}`;
+    const string = `${email}-${userType}-${process.env.PRODUCT_KEY}`;
 
     return bcrypt.hash(string, 10);
   }
