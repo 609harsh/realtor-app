@@ -22,11 +22,40 @@ import {
 import { HomeService } from './home.service';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Roles } from 'src/decorators/roles.decorator';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Homes')
 @Controller('home')
 export class HomeController {
   constructor(private readonly homeService: HomeService) {}
-
+  
+  @ApiOperation({
+    summary:"Get Particular homes ",
+    description:'Provide city,minPrice,maxPrice,propertyType to get specific list of homes'
+  })
+  @ApiQuery({
+    name: "city",
+    type: 'string',
+    description: "City Name",
+    example: "Lucknow",        
+  })
+  @ApiQuery({
+    name: "minPrice",
+    type: 'string',
+    description: 'minimum price for home',
+    example:"2000"
+  })
+  @ApiQuery({
+    name: "maxPrice",
+    type: 'string',
+    description: 'maximum price for home',
+    example:"4000"
+  })
+  @ApiQuery({
+    name: "propertyType",
+    enum: PropertyType,
+    description: 'select Property Type',
+  })
   @Get()
   getHomes(
     @Query('city') city?: string,
@@ -51,11 +80,26 @@ export class HomeController {
     return this.homeService.getHomes(filters);
   }
 
+  @ApiOperation({
+    description: "Get List of all homes",
+    summary:"All users can get list of all homes. No authentication needed"
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    description: "Unique Home Id",
+    required: true,
+    example:"6cstwazgcsryhre"
+  })
   @Get(':id')
   getHome(@Param('id', ParseIntPipe) id: number) {
     return this.homeService.getHomeById(id);
   }
 
+  @ApiBody({
+    type:CreateHomeDto
+  })
+  @ApiBearerAuth()
   @Roles(UserType.REALTOR)
   @Post()
   createHome(@Body() body: CreateHomeDto, @User() user: UserInfo) {
