@@ -11,7 +11,8 @@ API Link(BASE): https://realtor-app-api.onrender.com
 
 Swagger Documentation Link: https://realtor-app-api.onrender.com/api
 
-![image](https://github.com/609harsh/realtor-app/assets/97297407/f9354923-fcf3-41ad-9b42-e22d8be674a1)
+![image](https://github.com/609harsh/realtor-app/assets/97297407/0c599e0a-bd24-4e20-82ad-425e271f965b)
+
 
 ALL Routes
 ![image](https://github.com/609harsh/realtor-app/assets/97297407/a8ad7f1d-c582-491c-854e-b2da0b32a4b4)
