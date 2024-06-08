@@ -30,8 +30,8 @@ export class HomeController {
   constructor(private readonly homeService: HomeService) {}
   
   @ApiOperation({
-    summary:"Get Particular homes ",
-    description:'Provide city,minPrice,maxPrice,propertyType to get specific list of homes'
+    summary:"Get All Homes",
+    description:'Use Filters to get specific list of homes'
   })
   @ApiQuery({
     name: "city",
@@ -63,6 +63,7 @@ export class HomeController {
     @Query('maxPrice') maxPrice?: string,
     @Query('propertyType') propertyType?: PropertyType,
   ): Promise<HomeResponseDto[]> {
+    console.log(city)
     const price =
       minPrice || maxPrice
         ? {
@@ -96,8 +97,9 @@ export class HomeController {
     return this.homeService.getHomeById(id);
   }
 
-  @ApiBody({
-    type:CreateHomeDto
+  @ApiOperation({
+    summary: "Add New homes",
+    description:"REALTOR is allowed to add new homes"
   })
   @ApiBearerAuth()
   @Roles(UserType.REALTOR)
@@ -106,6 +108,17 @@ export class HomeController {
     return this.homeService.createHome(body, user.id);
   }
 
+
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: "Update a home",
+    description:"Update a particular or multiple fields of Home. Only Realtor are "
+  })
+  @ApiParam({
+    name: 'id',
+    description: "home id",
+    example:"6cstwazgcsryhre"
+  })
   @Roles(UserType.REALTOR)
   @Put(':id')
   async updateHome(
@@ -122,6 +135,16 @@ export class HomeController {
     return this.homeService.updateHomeById(id, body);
   }
 
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: "Delete a home",
+    description:"Home can only be deleted by a user of type REALTOR"
+  })
+  @ApiParam({
+    name: 'id',
+    description: "home id",
+    example:"6cstwazgcsryhre"
+  })
   @Roles(UserType.REALTOR)
   @Delete(':id')
   async deleteHome(
@@ -136,6 +159,7 @@ export class HomeController {
     return this.homeService.deleteHomeById(id);
   }
 
+  @ApiBearerAuth()
   @Roles(UserType.BUYER)
   @Post('/:id/inquire')
   inquire(
@@ -146,6 +170,7 @@ export class HomeController {
     return this.homeService.inquire(user, homeId, message);
   }
 
+  @ApiBearerAuth()
   @Roles(UserType.REALTOR)
   @Get('/:id/messages')
   async getHomeMessages(
