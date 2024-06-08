@@ -63,7 +63,7 @@ export class HomeService {
     });
 
     if (!homes.length) {
-      throw new NotFoundException();
+      return [];
     }
 
     return homes.map((home) => {
@@ -127,7 +127,7 @@ export class HomeService {
         realtor_id: userId,
       },
     });
-
+    
     const homeImages = images.map((image) => {
       return { ...image, home_id: home.id };
     });

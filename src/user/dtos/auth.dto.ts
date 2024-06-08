@@ -31,7 +31,7 @@ export class SignupDto {
   @MinLength(5)
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsString()
   @IsNotEmpty()

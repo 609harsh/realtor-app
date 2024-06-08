@@ -98,12 +98,12 @@ export class CreateHomeDto {
   @IsNotEmpty()
   address: string;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsNumber()
   @IsPositive()
   numberOfBedrooms: number;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsNumber()
   @IsPositive()
   numberOfBathrooms: number;
@@ -118,7 +118,7 @@ export class CreateHomeDto {
   @IsPositive()
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsNumber()
   @IsPositive()
   landSize: number;
@@ -127,7 +127,7 @@ export class CreateHomeDto {
   @IsEnum(PropertyType)
   propertyType: PropertyType;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Image)
@@ -135,43 +135,43 @@ export class CreateHomeDto {
 }
 
 export class UpdateHomeDto {
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   address?: string;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsNumber()
   @IsPositive()
-  numberOfBedrooms?: number;
+  number_of_bedrooms?: number;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsNumber()
   @IsPositive()
-  numberOfBathrooms?: number;
+  number_of_bathrooms?: number;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   city?: string;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsNumber()
   @IsPositive()
   price?: number;
 
-  @ApiProperty()
+  @ApiProperty({required:false})
   @IsOptional()
   @IsNumber()
   @IsPositive()
   landSize?: number;
 
-  @ApiProperty()
+  @ApiProperty({required:false,enum:PropertyType,examples:[PropertyType.CONDO,PropertyType.RESIDENTIAL]})
   @IsOptional()
   @IsEnum(PropertyType)
   propertyType?: PropertyType;
